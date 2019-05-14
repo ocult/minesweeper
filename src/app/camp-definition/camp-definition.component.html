@@ -1,0 +1,15 @@
+<form #devForm="ngForm">
+  Campo minado:
+  <input type="number" name="x" id="x" [(ngModel)]="definition.x" /> linhas
+  <input type="number" name="y" id="y" [(ngModel)]="definition.y" /> colunas
+
+  <table>
+    <tbody>
+      <tr *ngFor="let row of definition.camp; let x = index">
+        <td *ngFor="let col of row; let y = index">
+          <button (click)="definition.changeBomb(x, y)"><span [innerHtml]="htmlDisplay(x, y)"></span></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
