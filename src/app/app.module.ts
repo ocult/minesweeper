@@ -13,7 +13,7 @@ import { CampDefinitionComponent } from './camp-definition/camp-definition.compo
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
