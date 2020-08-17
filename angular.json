@@ -140,5 +140,8 @@
       }
     }
   },
-  "defaultProject": "Bootcamp"
+  "defaultProject": "Bootcamp",
+  "cli": {
+    "analytics": "512f0c96-1235-48e0-87d8-5fd580f6d6e5"
+  }
 }
