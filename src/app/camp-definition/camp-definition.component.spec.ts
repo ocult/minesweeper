@@ -9,8 +9,7 @@ describe('CampDefinitionComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule],
-      declarations: [CampDefinitionComponent]
+      imports: [FormsModule, CampDefinitionComponent]
     })
       .compileComponents();
   }));

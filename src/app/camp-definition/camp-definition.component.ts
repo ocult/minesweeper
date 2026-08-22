@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, SecurityContext } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Bootcamp } from './bootcamp';
 
@@ -6,7 +8,7 @@ import { Bootcamp } from './bootcamp';
   selector: 'app-camp-definition',
   templateUrl: './camp-definition.component.html',
   styleUrls: ['./camp-definition.component.less'],
-  standalone: false
+  imports: [CommonModule, FormsModule]
 })
 export class CampDefinitionComponent implements OnInit {
 

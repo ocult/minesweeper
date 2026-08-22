@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CampDefinitionComponent } from './camp-definition/camp-definition.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: 'def', component: CampDefinitionComponent }
 ];
 
