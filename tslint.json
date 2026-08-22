@@ -1,8 +1,5 @@
 {
   "extends": "tslint:recommended",
-  "rulesDirectory": [
-    "codelyzer"
-  ],
   "rules": {
     "align": {
       "options": [
@@ -14,9 +11,7 @@
     "arrow-parens": false,
     "arrow-return-shorthand": true,
     "curly": true,
-    "deprecation": {
-      "severity": "warn"
-    },
+    "deprecation": false,
     "eofline": true,
     "import-blacklist": [
       true,
@@ -89,12 +84,6 @@
       }
     },
     "trailing-comma": false,
-    "no-output-on-prefix": true,
-    "no-inputs-metadata-property": true,
-    "no-outputs-metadata-property": true,
-    "no-host-metadata-property": true,
-    "no-input-rename": true,
-    "no-output-rename": true,
     "typedef-whitespace": {
       "options": [
         {
@@ -113,10 +102,10 @@
         }
       ]
     },
-    "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true,
-    "component-class-suffix": true,
-    "directive-class-suffix": true
+    "use-lifecycle-interface": false,
+    "use-pipe-transform-interface": false,
+    "component-class-suffix": false,
+    "directive-class-suffix": false
   ,    "variable-name": {
       "options": [
         "ban-keywords",
