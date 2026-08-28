@@ -11,6 +11,7 @@ import { CampStateService } from './camp-state.service';
 })
 export class CampComponent {
   revealed: boolean[][] = [];
+  gameOver = false;
 
   constructor(
     private campState: CampStateService,
@@ -29,7 +30,27 @@ export class CampComponent {
   }
 
   reveal(x: number, y: number): void {
-    this.revealed[x][y] = true;
+    if (this.gameOver || this.revealed[x][y]) {
+      return;
+    }
+
+    const definition = this.definition;
+    if (!definition) {
+      return;
+    }
+
+    if (definition.camp[x][y] === -1) {
+      this.gameOver = true;
+      this.revealed = definition.camp.map(row => row.map(() => true));
+      return;
+    }
+
+    if (definition.camp[x][y] > 0) {
+      this.revealed[x][y] = true;
+      return;
+    }
+
+    this.revealEmptyArea(x, y);
   }
 
   reset(): void {
@@ -38,10 +59,51 @@ export class CampComponent {
       return;
     }
 
+    this.gameOver = false;
     this.revealed = definition.camp.map(row => row.map(() => false));
   }
 
   backToDefinition(): void {
     this.router.navigate(['/def']);
+  }
+
+  private revealEmptyArea(x: number, y: number): void {
+    const definition = this.definition;
+    if (!definition) {
+      return;
+    }
+
+    const pending = [[x, y]];
+    while (pending.length > 0) {
+      const current = pending.shift();
+      if (!current) {
+        continue;
+      }
+
+      const [currentX, currentY] = current;
+      if (this.revealed[currentX][currentY]) {
+        continue;
+      }
+
+      this.revealed[currentX][currentY] = true;
+      if (definition.camp[currentX][currentY] !== 0) {
+        continue;
+      }
+
+      for (let row = currentX - 1; row <= currentX + 1; row++) {
+        for (let column = currentY - 1; column <= currentY + 1; column++) {
+          if (
+            row >= 0 &&
+            row < this.revealed.length &&
+            column >= 0 &&
+            column < this.revealed[row].length &&
+            !this.revealed[row][column] &&
+            definition.camp[row][column] !== -1
+          ) {
+            pending.push([row, column]);
+          }
+        }
+      }
+    }
   }
 }
