@@ -3,6 +3,8 @@
   <input type="number" name="x" id="x" [(ngModel)]="definition.x" /> linhas
   <input type="number" name="y" id="y" [(ngModel)]="definition.y" /> colunas
 
+  <button type="button" (click)="createCamp()">Criar campo jogável</button>
+
   <table>
     <tbody>
       <tr *ngFor="let row of definition.camp; let x = index">
