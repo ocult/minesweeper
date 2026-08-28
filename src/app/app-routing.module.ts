@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CampDefinitionComponent } from './camp-definition/camp-definition.component';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'def', pathMatch: 'full' },
   { path: 'def', component: CampDefinitionComponent }
 ];
 

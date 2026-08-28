@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Bootcamp } from './bootcamp';
 
 @Component({
@@ -19,7 +19,7 @@ export class CampDefinitionComponent implements OnInit {
   ngOnInit() {
   }
 
-  htmlDisplay(x: number, y: number): SafeHtml {
+  htmlDisplay(x: number, y: number): string {
     return this.domSanitizer.sanitize(SecurityContext.HTML, this.definition.display(x, y).replace(' ', '&nbsp;')) || '';
   }
 }
