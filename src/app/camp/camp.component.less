@@ -91,6 +91,44 @@ td {
   filter: brightness(1.12);
 }
 
+.cell-button.flag {
+  background: linear-gradient(180deg, #7f1d1d 0%, #4c0519 100%);
+  border-color: rgba(248, 113, 113, 0.8);
+}
+
+.cell-button.flag::before {
+  content: '🚩';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.cell-button.flag .cell-value {
+  visibility: hidden;
+}
+
+.cell-button.question {
+  background: linear-gradient(180deg, #78350f 0%, #451a03 100%);
+  border-color: rgba(251, 191, 36, 0.8);
+}
+
+.cell-button.question::before {
+  content: '❔';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.cell-button.question .cell-value {
+  visibility: hidden;
+}
+
 .cell-button.revealed {
   background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
   border-color: rgba(100, 116, 139, 0.8);

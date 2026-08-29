@@ -14,6 +14,7 @@
           <button
             type="button"
             (click)="reveal(x, y)"
+            (contextmenu)="onCellContextMenu($event, x, y)"
             [ngClass]="getButtonClasses(x, y)"
           >
             <span class="cell-value">{{ getCellValue(x, y) }}</span>

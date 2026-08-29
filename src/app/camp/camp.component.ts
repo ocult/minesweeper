@@ -11,6 +11,7 @@ import { CampStateService } from './camp-state.service';
 })
 export class CampComponent implements OnDestroy {
   revealed: boolean[][] = [];
+  marks: Array<Array<'flag' | 'question' | null>> = [];
   gameOver = false;
   gameWon = false;
   elapsedSeconds = 0;
@@ -64,6 +65,17 @@ export class CampComponent implements OnDestroy {
   getButtonClasses(x: number, y: number): string[] {
     const classes = ['cell-button'];
     if (!this.revealed[x][y]) {
+      const mark = this.marks[x][y];
+      if (mark === 'flag') {
+        classes.push('flag');
+        return classes;
+      }
+
+      if (mark === 'question') {
+        classes.push('question');
+        return classes;
+      }
+
       classes.push('hidden');
       return classes;
     }
@@ -76,8 +88,32 @@ export class CampComponent implements OnDestroy {
     return classes;
   }
 
-  reveal(x: number, y: number): void {
+  onCellContextMenu(event: MouseEvent, x: number, y: number): void {
+    event.preventDefault();
+    this.toggleMark(x, y);
+  }
+
+  toggleMark(x: number, y: number): void {
     if (this.gameOver || this.gameWon || this.revealed[x][y]) {
+      return;
+    }
+
+    const current = this.marks[x][y];
+    if (current === 'flag') {
+      this.marks[x][y] = 'question';
+      return;
+    }
+
+    if (current === 'question') {
+      this.marks[x][y] = null;
+      return;
+    }
+
+    this.marks[x][y] = 'flag';
+  }
+
+  reveal(x: number, y: number): void {
+    if (this.gameOver || this.gameWon || this.revealed[x][y] || this.marks[x][y] !== null) {
       return;
     }
 
@@ -113,6 +149,7 @@ export class CampComponent implements OnDestroy {
     this.gameWon = false;
     this.elapsedSeconds = 0;
     this.revealed = definition.camp.map(row => row.map(() => false));
+    this.marks = definition.camp.map(row => row.map(() => null));
     this.startTimer();
   }
 
