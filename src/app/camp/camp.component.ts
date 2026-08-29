@@ -41,6 +41,37 @@ export class CampComponent implements OnDestroy {
     return `${minutes}min ${seconds}s`;
   }
 
+  get totalBombs(): number {
+    const definition = this.definition;
+    if (!definition) {
+      return 0;
+    }
+
+    let total = 0;
+    for (const row of definition.camp) {
+      for (const value of row) {
+        if (value === -1) {
+          total++;
+        }
+      }
+    }
+
+    return total;
+  }
+
+  get flaggedCells(): number {
+    let total = 0;
+    for (const row of this.marks) {
+      for (const value of row) {
+        if (value === 'flag') {
+          total++;
+        }
+      }
+    }
+
+    return total;
+  }
+
   get statusTitle(): string {
     if (this.gameOver) {
       return 'Você foi explodido';
@@ -101,6 +132,7 @@ export class CampComponent implements OnDestroy {
     const current = this.marks[x][y];
     if (current === 'flag') {
       this.marks[x][y] = 'question';
+      this.checkVictory();
       return;
     }
 
@@ -110,6 +142,7 @@ export class CampComponent implements OnDestroy {
     }
 
     this.marks[x][y] = 'flag';
+    this.checkVictory();
   }
 
   reveal(x: number, y: number): void {
@@ -167,6 +200,31 @@ export class CampComponent implements OnDestroy {
       return;
     }
 
+    const allBombsFlagged = definition.camp.every((row, rowIndex) =>
+      row.every((cell, columnIndex) => {
+        if (cell !== -1) {
+          return true;
+        }
+
+        return this.marks[rowIndex][columnIndex] === 'flag';
+      })
+    );
+
+    const onlyBombsFlagged = definition.camp.every((row, rowIndex) =>
+      row.every((cell, columnIndex) => {
+        if (this.marks[rowIndex][columnIndex] === 'flag') {
+          return cell === -1;
+        }
+
+        return true;
+      })
+    );
+
+    if (allBombsFlagged && onlyBombsFlagged) {
+      this.finishVictory();
+      return;
+    }
+
     for (let row = 0; row < definition.camp.length; row++) {
       for (let column = 0; column < definition.camp[row].length; column++) {
         if (definition.camp[row][column] !== -1 && !this.revealed[row][column]) {
@@ -175,8 +233,22 @@ export class CampComponent implements OnDestroy {
       }
     }
 
+    this.finishVictory();
+  }
+
+  private finishVictory(): void {
+    if (this.gameWon) {
+      return;
+    }
+
+    const definition = this.definition;
+    if (!definition) {
+      return;
+    }
+
     this.gameWon = true;
     this.stopTimer();
+    this.revealed = definition.camp.map(row => row.map(() => true));
   }
 
   private revealEmptyArea(x: number, y: number): void {
