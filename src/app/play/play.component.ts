@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, NgZone, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { MinefieldBoardBase } from '../shared/minefield-board-base';
 import { MinefieldAppearance, MinefieldBoardDefinition, MinefieldMark } from '../shared/minefield.types';
 import { MinefieldComponent } from '../shared/minefield.component';
-import { CampStateService } from './camp-state.service';
+import { PlayStateService } from './play-state.service';
 
 @Component({
-  selector: 'app-camp',
-  templateUrl: './camp.component.html',
-  styleUrls: ['./camp.component.less'],
+  selector: 'app-play',
+  templateUrl: './play.component.html',
+  styleUrls: ['./play.component.less'],
   imports: [CommonModule, MinefieldComponent]
 })
-export class CampComponent implements OnDestroy {
+export class PlayComponent extends MinefieldBoardBase implements OnDestroy {
   revealed: boolean[][] = [];
   marks: Array<Array<MinefieldMark>> = [];
   gameOver = false;
@@ -20,13 +21,14 @@ export class CampComponent implements OnDestroy {
   private timerId: ReturnType<typeof setInterval> | undefined;
 
   constructor(
-    private campState: CampStateService,
+    private playState: PlayStateService,
     private router: Router,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef
   ) {
-    if (!this.campState.definition) {
-      this.router.navigate(['/def']);
+    super();
+    if (!this.playState.definition) {
+      this.router.navigate(['/definition']);
       return;
     }
 
@@ -34,7 +36,7 @@ export class CampComponent implements OnDestroy {
   }
 
   get definition(): MinefieldBoardDefinition | null {
-    return this.campState.definition;
+    return this.playState.definition;
   }
 
   get elapsedTimeLabel(): string {
@@ -91,29 +93,15 @@ export class CampComponent implements OnDestroy {
       return ' ';
     }
 
-    const value = this.definition?.display(x, y) ?? ' ';
-    return value === ' ' ? ' ' : value;
+    return this.getBoardValue(this.definition, x, y);
   }
 
   getCellAppearance(x: number, y: number): MinefieldAppearance {
     if (!this.revealed[x][y]) {
-      const mark = this.marks[x][y];
-      if (mark === 'flag') {
-        return 'flag';
-      }
-
-      if (mark === 'question') {
-        return 'question';
-      }
-
-      return 'hidden';
+      return this.getHiddenAppearance(this.marks[x][y]);
     }
 
-    if (this.definition?.camp[x][y] === -1) {
-      return 'bomb';
-    }
-
-    return 'revealed';
+    return this.getRevealedAppearance(this.definition, x, y);
   }
 
   onCellContextMenu(event: MouseEvent, x: number, y: number): void {
@@ -184,7 +172,7 @@ export class CampComponent implements OnDestroy {
   }
 
   backToDefinition(): void {
-    this.router.navigate(['/def']);
+    this.router.navigate(['/definition']);
   }
 
   ngOnDestroy(): void {

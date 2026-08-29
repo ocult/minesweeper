@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CampDefinitionComponent } from './camp-definition/camp-definition.component';
-import { CampComponent } from './camp/camp.component';
+import { DefinitionComponent } from './definition/definition.component';
+import { PlayComponent } from './play/play.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'def', pathMatch: 'full' },
-  { path: 'def', component: CampDefinitionComponent },
-  { path: 'camp', component: CampComponent }
+  { path: '', redirectTo: 'definition', pathMatch: 'full' },
+  { path: 'definition', component: DefinitionComponent },
+  { path: 'play', component: PlayComponent }
 ];
 
 @NgModule({
