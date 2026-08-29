@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CampStateService } from './camp-state.service';
 
@@ -9,9 +9,12 @@ import { CampStateService } from './camp-state.service';
   styleUrls: ['./camp.component.less'],
   imports: [CommonModule]
 })
-export class CampComponent {
+export class CampComponent implements OnDestroy {
   revealed: boolean[][] = [];
   gameOver = false;
+  gameWon = false;
+  elapsedSeconds = 0;
+  private timerId: ReturnType<typeof setInterval> | undefined;
 
   constructor(
     private campState: CampStateService,
@@ -30,7 +33,7 @@ export class CampComponent {
   }
 
   reveal(x: number, y: number): void {
-    if (this.gameOver || this.revealed[x][y]) {
+    if (this.gameOver || this.gameWon || this.revealed[x][y]) {
       return;
     }
 
@@ -42,15 +45,18 @@ export class CampComponent {
     if (definition.camp[x][y] === -1) {
       this.gameOver = true;
       this.revealed = definition.camp.map(row => row.map(() => true));
+      this.stopTimer();
       return;
     }
 
     if (definition.camp[x][y] > 0) {
       this.revealed[x][y] = true;
+      this.checkVictory();
       return;
     }
 
     this.revealEmptyArea(x, y);
+    this.checkVictory();
   }
 
   reset(): void {
@@ -60,11 +66,36 @@ export class CampComponent {
     }
 
     this.gameOver = false;
+    this.gameWon = false;
+    this.elapsedSeconds = 0;
     this.revealed = definition.camp.map(row => row.map(() => false));
+    this.startTimer();
   }
 
   backToDefinition(): void {
     this.router.navigate(['/def']);
+  }
+
+  ngOnDestroy(): void {
+    this.stopTimer();
+  }
+
+  private checkVictory(): void {
+    const definition = this.definition;
+    if (!definition) {
+      return;
+    }
+
+    for (let row = 0; row < definition.camp.length; row++) {
+      for (let column = 0; column < definition.camp[row].length; column++) {
+        if (definition.camp[row][column] !== -1 && !this.revealed[row][column]) {
+          return;
+        }
+      }
+    }
+
+    this.gameWon = true;
+    this.stopTimer();
   }
 
   private revealEmptyArea(x: number, y: number): void {
@@ -104,6 +135,22 @@ export class CampComponent {
           }
         }
       }
+    }
+  }
+
+  private startTimer(): void {
+    this.stopTimer();
+    this.timerId = setInterval(() => {
+      if (!this.gameOver && !this.gameWon) {
+        this.elapsedSeconds++;
+      }
+    }, 1000);
+  }
+
+  private stopTimer(): void {
+    if (this.timerId !== undefined) {
+      clearInterval(this.timerId);
+      this.timerId = undefined;
     }
   }
 }

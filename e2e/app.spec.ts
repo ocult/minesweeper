@@ -64,3 +64,12 @@ test('abre a área vazia e encerra ao encontrar uma bomba', async ({ page }) => 
     ' ', ' ', ' ', ' ', ' '
   ]);
 });
+
+test('vence ao revelar todas as células que não são bombas e para o cronômetro', async ({ page }) => {
+  await page.goto('/def');
+  await page.getByRole('button', { name: 'Criar campo jogável' }).click();
+
+  await page.locator('table button').first().click();
+  await expect(page.getByRole('heading', { name: 'Você venceu' })).toBeVisible();
+  await expect(page.getByText('Tempo: 0s')).toBeVisible();
+});

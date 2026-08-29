@@ -1,5 +1,5 @@
 <ng-container *ngIf="definition as camp">
-  <h1>{{ gameOver ? 'Você foi explodido' : 'Campo minado' }}</h1>
+  <h1>{{ gameOver ? 'Você foi explodido' : gameWon ? 'Você venceu' : 'Campo minado' }}</h1>
 
   <table>
     <tbody>
@@ -13,6 +13,7 @@
     </tbody>
   </table>
 
+  <p>Tempo: {{ elapsedSeconds }}s</p>
   <button type="button" (click)="reset()">Reiniciar</button>
   <button type="button" (click)="backToDefinition()">Voltar à definição</button>
 </ng-container>
