@@ -3,10 +3,13 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #e2e8f0;
   background: radial-gradient(circle at top, #1e293b 0%, #0f172a 52%, #020817 100%);
-  border-radius: 18px;
+  min-height: 100vh;
   padding: 24px 20px;
-  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.45);
-  max-width: max-content;
+  margin: 0;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .actions {
@@ -17,8 +20,7 @@
 }
 
 .action-button {
-  border: 1px solid rgba(148, 163, 184, 0.7);
-  border-bottom-width: 3px;
+  border: none;
   border-radius: 10px;
   padding: 0.7rem 1rem;
   font: inherit;
@@ -47,8 +49,8 @@ table {
   border-spacing: 6px;
   margin: 12px 0;
   background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  border-radius: 12px;
+  border: none;
+  border-radius: 0;
   padding: 8px;
 }
 
@@ -64,8 +66,7 @@ td {
   min-height: 2.6rem;
   margin: 0;
   padding: 0;
-  border: 1px solid rgba(148, 163, 184, 0.7);
-  border-bottom-width: 3px;
+  border: none;
   border-radius: 10px;
   background: linear-gradient(180deg, #334155 0%, #1f2937 100%);
   color: #e2e8f0;
@@ -167,6 +168,7 @@ td {
   margin-bottom: 10px;
   transition: color 0.2s ease;
   letter-spacing: 0.02em;
+  text-align: center;
 }
 
 .status-win {
