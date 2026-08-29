@@ -1,0 +1,19 @@
+<ng-container *ngIf="definition as camp">
+  <h1>{{ gameOver ? 'Você foi explodido' : gameWon ? 'Você venceu' : 'Campo minado' }}</h1>
+
+  <table>
+    <tbody>
+      <tr *ngFor="let row of camp.camp; let x = index">
+        <td *ngFor="let col of row; let y = index">
+          <button type="button" (click)="reveal(x, y)">
+            {{ revealed[x][y] ? camp.display(x, y) : ' ' }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Tempo: {{ elapsedTimeLabel }}</p>
+  <button type="button" (click)="reset()">Reiniciar</button>
+  <button type="button" (click)="backToDefinition()">Voltar à definição</button>
+</ng-container>
