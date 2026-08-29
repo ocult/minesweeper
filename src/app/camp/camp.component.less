@@ -1,46 +1,60 @@
 :host {
   display: block;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #1f2937;
+  color: #e2e8f0;
+  background: radial-gradient(circle at top, #1e293b 0%, #0f172a 52%, #020817 100%);
+  border-radius: 18px;
+  padding: 24px 20px;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.45);
+  max-width: max-content;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.action-button {
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  border-bottom-width: 3px;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.08), inset 0 -2px 0 rgba(0, 0, 0, 0.22);
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.action-button.primary {
+  background: linear-gradient(180deg, #16a34a 0%, #166534 100%);
+  color: #f0fdf4;
+}
+
+.action-button.secondary {
+  background: linear-gradient(180deg, #475569 0%, #1e293b 100%);
+  color: #f8fafc;
 }
 
 table {
-  border-spacing: 0;
+  border-spacing: 6px;
   margin: 12px 0;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 12px;
+  padding: 8px;
 }
 
 td {
   margin: 0;
-  padding: 2px;
-}
-
-table button {
-  width: 2.6rem;
-  height: 2.6rem;
-  min-width: 2.6rem;
-  min-height: 2.6rem;
-  margin: 0;
   padding: 0;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
-  color: #0f172a;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1.05rem;
-  font-weight: 700;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  position: relative;
-}
-
-table button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
 }
 
 .cell-button {
@@ -50,35 +64,42 @@ table button:hover {
   min-height: 2.6rem;
   margin: 0;
   padding: 0;
-  border: 1px solid #d1d5db;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  border-bottom-width: 3px;
   border-radius: 10px;
-  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
-  color: #0f172a;
+  background: linear-gradient(180deg, #334155 0%, #1f2937 100%);
+  color: #e2e8f0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.08), inset 0 -2px 0 rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
   position: relative;
 }
 
 .cell-button.hidden {
-  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  background: linear-gradient(180deg, #334155 0%, #1f2937 100%);
   color: transparent;
 }
 
+.cell-button.hidden:hover {
+  filter: brightness(1.12);
+}
+
 .cell-button.revealed {
-  background: #ffffff;
-  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.35);
+  background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
+  border-color: rgba(100, 116, 139, 0.8);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.8), inset 0 -2px 0 rgba(15, 23, 42, 0.12);
 }
 
 .cell-button.revealed .cell-value {
   color: #0f172a;
+  text-shadow: none;
 }
 
 .cell-button.bomb::before {
@@ -88,7 +109,7 @@ table button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
 .cell-button.bomb .cell-value {
@@ -101,22 +122,25 @@ table button:hover {
   justify-content: center;
   width: 100%;
   height: 100%;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .status-title {
   margin-bottom: 10px;
   transition: color 0.2s ease;
+  letter-spacing: 0.02em;
 }
 
 .status-win {
-  color: #15803d;
+  color: #4ade80;
 }
 
 .status-loss {
-  color: #b91c1c;
+  color: #f87171;
 }
 
 p {
   font-size: 1.05rem;
   font-weight: 600;
+  color: #cbd5e1;
 }

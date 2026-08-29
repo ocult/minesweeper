@@ -24,6 +24,8 @@
   </table>
 
   <p>Tempo: {{ elapsedTimeLabel }}</p>
-  <button type="button" (click)="reset()">Reiniciar</button>
-  <button type="button" (click)="backToDefinition()">Voltar à definição</button>
+  <div class="actions">
+    <button class="action-button primary" type="button" (click)="reset()">Reiniciar</button>
+    <button class="action-button secondary" type="button" (click)="backToDefinition()">Voltar à definição</button>
+  </div>
 </ng-container>

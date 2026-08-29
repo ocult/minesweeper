@@ -1,9 +1,19 @@
 <form #devForm="ngForm">
-  Campo minado:
-  <input type="number" name="x" id="x" [(ngModel)]="definition.x" /> linhas
-  <input type="number" name="y" id="y" [(ngModel)]="definition.y" /> colunas
+  <label class="field-label">Campo minado</label>
 
-  <button type="button" (click)="createCamp()">Criar campo jogável</button>
+  <div class="dimension-fields">
+    <label class="field-group">
+      <span>Linhas</span>
+      <input class="size-input" type="number" name="x" id="x" [(ngModel)]="definition.x" />
+    </label>
+
+    <label class="field-group">
+      <span>Colunas</span>
+      <input class="size-input" type="number" name="y" id="y" [(ngModel)]="definition.y" />
+    </label>
+  </div>
+
+  <button class="action-button primary" type="button" (click)="createCamp()">Criar campo jogável</button>
 
   <table>
     <tbody>

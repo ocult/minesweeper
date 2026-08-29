@@ -1,54 +1,84 @@
 :host {
   display: block;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #1f2937;
+  color: #e2e8f0;
+  background: radial-gradient(circle at top, #1e293b 0%, #0f172a 52%, #020817 100%);
+  border-radius: 18px;
+  padding: 24px 20px;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.45);
+  max-width: max-content;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
-input {
-  display: block;
-  padding: 0.5rem 0.7rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
+.field-label {
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.dimension-fields {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+}
+
+.size-input {
+  width: 110px;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  border-radius: 10px;
   font: inherit;
+  background: rgba(15, 23, 42, 0.75);
+  color: #f8fafc;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.7);
+}
+
+.action-button {
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  border-bottom-width: 3px;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.08), inset 0 -2px 0 rgba(0, 0, 0, 0.22);
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.action-button.primary {
+  background: linear-gradient(180deg, #16a34a 0%, #166534 100%);
+  color: #f0fdf4;
 }
 
 table {
-  border-spacing: 0;
+  border-spacing: 6px;
   margin-top: 8px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 12px;
+  padding: 8px;
 }
 
 td {
   margin: 0;
-  padding: 2px;
-}
-
-table button {
-  width: 2.4rem;
-  height: 2.4rem;
-  min-width: 2.4rem;
-  min-height: 2.4rem;
-  margin: 0;
   padding: 0;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
-  color: #0f172a;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
-  cursor: pointer;
-  position: relative;
 }
 
 .cell-button {
@@ -58,20 +88,27 @@ table button {
   min-height: 2.4rem;
   margin: 0;
   padding: 0;
-  border: 1px solid #d1d5db;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  border-bottom-width: 3px;
   border-radius: 10px;
-  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
-  color: #0f172a;
+  background: linear-gradient(180deg, #334155 0%, #1f2937 100%);
+  color: #f8fafc;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.08), inset 0 -2px 0 rgba(0, 0, 0, 0.25);
   cursor: pointer;
   position: relative;
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.cell-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
 }
 
 .cell-button.bomb::before {
@@ -94,4 +131,5 @@ table button {
   justify-content: center;
   width: 100%;
   height: 100%;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.12);
 }
