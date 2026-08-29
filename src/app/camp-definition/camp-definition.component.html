@@ -15,17 +15,12 @@
 
   <button class="action-button primary" type="button" (click)="createCamp()">Criar campo jogável</button>
 
-  <table>
-    <tbody>
-      <tr *ngFor="let row of definition.camp; let x = index">
-        <td *ngFor="let col of row; let y = index">
-          <button (click)="definition.changeBomb(x, y)" [ngClass]="getButtonClasses(x, y)">
-            <span class="cell-value">{{ htmlDisplay(x, y) }}</span>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <app-minefield
+    [rows]="definition.camp"
+    [getCellValue]="htmlDisplay.bind(this)"
+    [getAppearance]="getCellAppearance.bind(this)"
+    (cellClick)="definition.changeBomb($event.x, $event.y)"
+  ></app-minefield>
 
   <p class="helper-text">
     Clique em cada célula para alternar entre vazia e mina.

@@ -8,22 +8,13 @@
   </h1>
 
   <div class="board-wrap">
-    <table>
-      <tbody>
-        <tr *ngFor="let row of camp.camp; let x = index">
-          <td *ngFor="let col of row; let y = index">
-            <button
-              type="button"
-              (click)="reveal(x, y)"
-              (contextmenu)="onCellContextMenu($event, x, y)"
-              [ngClass]="getButtonClasses(x, y)"
-            >
-              <span class="cell-value">{{ getCellValue(x, y) }}</span>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <app-minefield
+      [rows]="camp.camp"
+      [getCellValue]="getCellValue.bind(this)"
+      [getAppearance]="getCellAppearance.bind(this)"
+      (cellClick)="reveal($event.x, $event.y)"
+      (cellContextMenu)="onCellContextMenu($event.event, $event.position.x, $event.position.y)"
+    ></app-minefield>
   </div>
 
   <p class="helper-text">

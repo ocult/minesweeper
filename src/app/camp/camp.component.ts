@@ -1,17 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, NgZone, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { MinefieldAppearance, MinefieldBoardDefinition, MinefieldMark } from '../shared/minefield.types';
+import { MinefieldComponent } from '../shared/minefield.component';
 import { CampStateService } from './camp-state.service';
 
 @Component({
   selector: 'app-camp',
   templateUrl: './camp.component.html',
   styleUrls: ['./camp.component.less'],
-  imports: [CommonModule]
+  imports: [CommonModule, MinefieldComponent]
 })
 export class CampComponent implements OnDestroy {
   revealed: boolean[][] = [];
-  marks: Array<Array<'flag' | 'question' | null>> = [];
+  marks: Array<Array<MinefieldMark>> = [];
   gameOver = false;
   gameWon = false;
   elapsedSeconds = 0;
@@ -31,7 +33,7 @@ export class CampComponent implements OnDestroy {
     this.reset();
   }
 
-  get definition() {
+  get definition(): MinefieldBoardDefinition | null {
     return this.campState.definition;
   }
 
@@ -86,37 +88,32 @@ export class CampComponent implements OnDestroy {
 
   getCellValue(x: number, y: number): string {
     if (!this.revealed[x][y]) {
-      return '';
+      return ' ';
     }
 
     const value = this.definition?.display(x, y) ?? ' ';
-    return value === ' ' ? '' : value;
+    return value === ' ' ? ' ' : value;
   }
 
-  getButtonClasses(x: number, y: number): string[] {
-    const classes = ['cell-button'];
+  getCellAppearance(x: number, y: number): MinefieldAppearance {
     if (!this.revealed[x][y]) {
       const mark = this.marks[x][y];
       if (mark === 'flag') {
-        classes.push('flag');
-        return classes;
+        return 'flag';
       }
 
       if (mark === 'question') {
-        classes.push('question');
-        return classes;
+        return 'question';
       }
 
-      classes.push('hidden');
-      return classes;
+      return 'hidden';
     }
 
-    classes.push('revealed');
     if (this.definition?.camp[x][y] === -1) {
-      classes.push('bomb');
+      return 'bomb';
     }
 
-    return classes;
+    return 'revealed';
   }
 
   onCellContextMenu(event: MouseEvent, x: number, y: number): void {
