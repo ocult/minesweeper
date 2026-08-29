@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, SecurityContext } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Bootcamp } from './bootcamp';
 import { CampStateService } from '../camp/camp-state.service';
@@ -17,7 +16,6 @@ export class CampDefinitionComponent implements OnInit {
   definition = new Bootcamp(5, 5);
 
   constructor(
-    private domSanitizer: DomSanitizer,
     private campState: CampStateService,
     private router: Router
   ) { }
@@ -27,11 +25,16 @@ export class CampDefinitionComponent implements OnInit {
 
   htmlDisplay(x: number, y: number): string {
     const value = this.definition.display(x, y);
-    if (value === '*') {
-      return '💣';
+    return value === ' ' ? '' : value;
+  }
+
+  getButtonClasses(x: number, y: number): string[] {
+    const classes = ['cell-button'];
+    if (this.definition.display(x, y) === '*') {
+      classes.push('bomb');
     }
 
-    return this.domSanitizer.sanitize(SecurityContext.HTML, value.replace(' ', '&nbsp;')) || '';
+    return classes;
   }
 
   createCamp(): void {

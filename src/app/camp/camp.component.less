@@ -43,19 +43,45 @@ table button:hover {
   box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
 }
 
-.cell-value {
-  display: inline-flex;
+.cell-button {
+  width: 2.6rem;
+  height: 2.6rem;
+  min-width: 2.6rem;
+  min-height: 2.6rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #0f172a;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
 }
 
-table button[data-bomb='true'] .cell-value {
-  visibility: hidden;
+.cell-button.hidden {
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  color: transparent;
 }
 
-table button[data-bomb='true']::before {
+.cell-button.revealed {
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.35);
+}
+
+.cell-button.revealed .cell-value {
+  color: #0f172a;
+}
+
+.cell-button.bomb::before {
   content: '💣';
   position: absolute;
   inset: 0;
@@ -63,6 +89,18 @@ table button[data-bomb='true']::before {
   align-items: center;
   justify-content: center;
   font-size: 1.1rem;
+}
+
+.cell-button.bomb .cell-value {
+  visibility: hidden;
+}
+
+.cell-value {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .status-title {

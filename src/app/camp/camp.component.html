@@ -14,7 +14,7 @@
           <button
             type="button"
             (click)="reveal(x, y)"
-            [attr.data-bomb]="revealed[x][y] && camp.display(x, y) === '*' ? 'true' : null"
+            [ngClass]="getButtonClasses(x, y)"
           >
             <span class="cell-value">{{ getCellValue(x, y) }}</span>
           </button>

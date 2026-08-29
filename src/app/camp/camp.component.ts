@@ -54,10 +54,26 @@ export class CampComponent implements OnDestroy {
 
   getCellValue(x: number, y: number): string {
     if (!this.revealed[x][y]) {
-      return ' ';
+      return '';
     }
 
-    return this.definition?.display(x, y) === '*' ? '💣' : this.definition?.display(x, y) ?? ' ';
+    const value = this.definition?.display(x, y) ?? ' ';
+    return value === ' ' ? '' : value;
+  }
+
+  getButtonClasses(x: number, y: number): string[] {
+    const classes = ['cell-button'];
+    if (!this.revealed[x][y]) {
+      classes.push('hidden');
+      return classes;
+    }
+
+    classes.push('revealed');
+    if (this.definition?.camp[x][y] === -1) {
+      classes.push('bomb');
+    }
+
+    return classes;
   }
 
   reveal(x: number, y: number): void {

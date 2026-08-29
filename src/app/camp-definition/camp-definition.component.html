@@ -9,7 +9,7 @@
     <tbody>
       <tr *ngFor="let row of definition.camp; let x = index">
         <td *ngFor="let col of row; let y = index">
-          <button (click)="definition.changeBomb(x, y)" [attr.data-bomb]="definition.display(x, y) === '*' ? 'true' : null">
+          <button (click)="definition.changeBomb(x, y)" [ngClass]="getButtonClasses(x, y)">
             <span class="cell-value">{{ htmlDisplay(x, y) }}</span>
           </button>
         </td>
