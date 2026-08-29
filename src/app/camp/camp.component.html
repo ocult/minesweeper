@@ -7,22 +7,28 @@
     {{ statusTitle }}
   </h1>
 
-  <table>
-    <tbody>
-      <tr *ngFor="let row of camp.camp; let x = index">
-        <td *ngFor="let col of row; let y = index">
-          <button
-            type="button"
-            (click)="reveal(x, y)"
-            (contextmenu)="onCellContextMenu($event, x, y)"
-            [ngClass]="getButtonClasses(x, y)"
-          >
-            <span class="cell-value">{{ getCellValue(x, y) }}</span>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="board-wrap">
+    <table>
+      <tbody>
+        <tr *ngFor="let row of camp.camp; let x = index">
+          <td *ngFor="let col of row; let y = index">
+            <button
+              type="button"
+              (click)="reveal(x, y)"
+              (contextmenu)="onCellContextMenu($event, x, y)"
+              [ngClass]="getButtonClasses(x, y)"
+            >
+              <span class="cell-value">{{ getCellValue(x, y) }}</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="helper-text">
+    Clique para revelar. Use o botão direito para marcar bandeira ou dúvida.
+  </p>
 
   <p>Tempo: {{ elapsedTimeLabel }}</p>
   <div class="actions">
