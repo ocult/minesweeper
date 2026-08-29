@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CampStateService } from './camp-state.service';
 
@@ -18,7 +18,9 @@ export class CampComponent implements OnDestroy {
 
   constructor(
     private campState: CampStateService,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
   ) {
     if (!this.campState.definition) {
       this.router.navigate(['/def']);
@@ -30,6 +32,12 @@ export class CampComponent implements OnDestroy {
 
   get definition() {
     return this.campState.definition;
+  }
+
+  get elapsedTimeLabel(): string {
+    const minutes = Math.floor(this.elapsedSeconds / 60);
+    const seconds = this.elapsedSeconds % 60;
+    return `${minutes}min ${seconds}s`;
   }
 
   reveal(x: number, y: number): void {
@@ -140,11 +148,14 @@ export class CampComponent implements OnDestroy {
 
   private startTimer(): void {
     this.stopTimer();
-    this.timerId = setInterval(() => {
-      if (!this.gameOver && !this.gameWon) {
-        this.elapsedSeconds++;
-      }
-    }, 1000);
+    this.ngZone.run(() => {
+      this.timerId = setInterval(() => {
+        if (!this.gameOver && !this.gameWon) {
+          this.elapsedSeconds++;
+          this.cdr.detectChanges();
+        }
+      }, 1000);
+    });
   }
 
   private stopTimer(): void {
