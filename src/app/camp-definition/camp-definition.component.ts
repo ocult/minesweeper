@@ -26,7 +26,12 @@ export class CampDefinitionComponent implements OnInit {
   }
 
   htmlDisplay(x: number, y: number): string {
-    return this.domSanitizer.sanitize(SecurityContext.HTML, this.definition.display(x, y).replace(' ', '&nbsp;')) || '';
+    const value = this.definition.display(x, y);
+    if (value === '*') {
+      return '💣';
+    }
+
+    return this.domSanitizer.sanitize(SecurityContext.HTML, value.replace(' ', '&nbsp;')) || '';
   }
 
   createCamp(): void {

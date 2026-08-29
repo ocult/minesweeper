@@ -1,12 +1,22 @@
 <ng-container *ngIf="definition as camp">
-  <h1>{{ gameOver ? 'Você foi explodido' : gameWon ? 'Você venceu' : 'Campo minado' }}</h1>
+  <h1
+    class="status-title"
+    [class.status-win]="gameWon"
+    [class.status-loss]="gameOver"
+  >
+    {{ statusTitle }}
+  </h1>
 
   <table>
     <tbody>
       <tr *ngFor="let row of camp.camp; let x = index">
         <td *ngFor="let col of row; let y = index">
-          <button type="button" (click)="reveal(x, y)">
-            {{ revealed[x][y] ? camp.display(x, y) : ' ' }}
+          <button
+            type="button"
+            (click)="reveal(x, y)"
+            [attr.data-bomb]="revealed[x][y] && camp.display(x, y) === '*' ? 'true' : null"
+          >
+            <span class="cell-value">{{ getCellValue(x, y) }}</span>
           </button>
         </td>
       </tr>

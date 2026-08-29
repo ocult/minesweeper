@@ -40,6 +40,26 @@ export class CampComponent implements OnDestroy {
     return `${minutes}min ${seconds}s`;
   }
 
+  get statusTitle(): string {
+    if (this.gameOver) {
+      return 'Você foi explodido';
+    }
+
+    if (this.gameWon) {
+      return 'Você venceu';
+    }
+
+    return 'Campo minado';
+  }
+
+  getCellValue(x: number, y: number): string {
+    if (!this.revealed[x][y]) {
+      return ' ';
+    }
+
+    return this.definition?.display(x, y) === '*' ? '💣' : this.definition?.display(x, y) ?? ' ';
+  }
+
   reveal(x: number, y: number): void {
     if (this.gameOver || this.gameWon || this.revealed[x][y]) {
       return;
