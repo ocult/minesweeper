@@ -7,6 +7,14 @@ test('exibe o campo minado', async ({ page }) => {
   await expect(page.locator('table button')).toHaveCount(25);
 });
 
+test('não permite jogar sem bombas na definição', async ({ page }) => {
+  await page.goto('/definition');
+
+  const createButton = page.getByRole('button', { name: 'Criar campo jogável' });
+  await expect(createButton).toBeDisabled();
+  await expect(page).toHaveURL(/\/definition$/);
+});
+
 test('altera uma célula do campo', async ({ page }) => {
   await page.goto('/definition');
 
@@ -18,6 +26,7 @@ test('altera uma célula do campo', async ({ page }) => {
 test('cria o campo jogável', async ({ page }) => {
   await page.goto('/definition');
 
+  await page.locator('table button').first().click();
   await page.getByRole('button', { name: 'Criar campo jogável' }).click();
 
   await expect(page).toHaveURL(/\/play$/);
@@ -67,6 +76,7 @@ test('abre a área vazia e encerra ao encontrar uma bomba', async ({ page }) => 
 
 test('vence ao revelar todas as células que não são bombas e para o cronômetro', async ({ page }) => {
   await page.goto('/definition');
+  await page.locator('table button').last().click();
   await page.getByRole('button', { name: 'Criar campo jogável' }).click();
 
   await page.locator('table button').first().click();

@@ -31,11 +31,19 @@ export class DefinitionComponent extends MinefieldBoardBase implements OnInit {
     return this.getBoardValue(this.definition, x, y);
   }
 
+  get hasBomb(): boolean {
+    return this.definition.camp.some(row => row.some(cell => cell === -1));
+  }
+
   getCellAppearance(x: number, y: number): MinefieldAppearance {
     return this.getRevealedAppearance(this.definition, x, y) === 'bomb' ? 'bomb' : 'hidden';
   }
 
   createCamp(): void {
+    if (!this.hasBomb) {
+      return;
+    }
+
     this.playState.definition = this.definition;
     this.router.navigate(['/play']);
   }

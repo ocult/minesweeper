@@ -13,7 +13,12 @@
     </label>
   </div>
 
-  <button class="action-button primary" type="button" (click)="createCamp()">Criar campo jogável</button>
+  <button
+    class="action-button primary"
+    type="button"
+    [disabled]="!hasBomb"
+    (click)="createCamp()"
+  >Criar campo jogável</button>
 
   <app-minefield
     [rows]="definition.camp"
