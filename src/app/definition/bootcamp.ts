@@ -90,6 +90,10 @@ export class Bootcamp implements MinefieldBoardDefinition {
   }
 
   setBomb(x: number, y: number): void {
+    if (this.countBombs() >= this.x * this.y - 1) {
+      return;
+    }
+
     this.internalCamp[x][y] = -1;
   }
 
@@ -109,6 +113,13 @@ export class Bootcamp implements MinefieldBoardDefinition {
 
   private isBomb(x: number, y: number): boolean {
     return this.internalCamp[x]?.[y] === -1;
+  }
+
+  private countBombs(): number {
+    return this.internalCamp.reduce(
+      (total, row) => total + row.filter(cell => cell === -1).length,
+      0
+    );
   }
 
   private clearBoard(): void {

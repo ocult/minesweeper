@@ -16,7 +16,7 @@
   <button
     class="action-button primary"
     type="button"
-    [disabled]="!hasBomb"
+    [disabled]="!hasBomb || !hasEmptySpace"
     (click)="createCamp()"
   >Criar campo jogável</button>
 

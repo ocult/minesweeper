@@ -15,6 +15,23 @@ test('não permite jogar sem bombas na definição', async ({ page }) => {
   await expect(page).toHaveURL(/\/definition$/);
 });
 
+test('mantém um espaço vazio quando todas as células são selecionadas', async ({ page }) => {
+  await page.goto('/definition');
+
+  const cells = page.locator('table button');
+  const totalCells = await cells.count();
+  for (let index = 1; index < totalCells; index++) {
+    await cells.nth(index).click();
+  }
+
+  const emptyCell = cells.first();
+  await expect(emptyCell).toHaveText(' ');
+  await emptyCell.click();
+  await expect(emptyCell).toHaveText(' ');
+  await expect(page.getByRole('button', { name: 'Criar campo jogável' })).toBeEnabled();
+  await expect(page).toHaveURL(/\/definition$/);
+});
+
 test('altera uma célula do campo', async ({ page }) => {
   await page.goto('/definition');
 

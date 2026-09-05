@@ -35,12 +35,16 @@ export class DefinitionComponent extends MinefieldBoardBase implements OnInit {
     return this.definition.camp.some(row => row.some(cell => cell === -1));
   }
 
+  get hasEmptySpace(): boolean {
+    return this.definition.camp.some(row => row.some(cell => cell !== -1));
+  }
+
   getCellAppearance(x: number, y: number): MinefieldAppearance {
     return this.getRevealedAppearance(this.definition, x, y) === 'bomb' ? 'bomb' : 'hidden';
   }
 
   createCamp(): void {
-    if (!this.hasBomb) {
+    if (!this.hasBomb || !this.hasEmptySpace) {
       return;
     }
 
