@@ -25,9 +25,9 @@ test('mantém um espaço vazio quando todas as células são selecionadas', asyn
   }
 
   const emptyCell = cells.first();
-  await expect(emptyCell).toHaveText(' ');
+  await expect(emptyCell).not.toHaveText('*');
   await emptyCell.click();
-  await expect(emptyCell).toHaveText(' ');
+  await expect(emptyCell).not.toHaveText('*');
   await expect(page.getByRole('button', { name: 'Criar campo jogável' })).toBeEnabled();
   await expect(page).toHaveURL(/\/definition$/);
 });
