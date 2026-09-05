@@ -1,14 +1,14 @@
 import { expect, test } from '@playwright/test';
 
 test('exibe o campo minado', async ({ page }) => {
-  await page.goto('/def');
+  await page.goto('/definition');
 
-  await expect(page.getByText('Campo minado:')).toBeVisible();
+  await expect(page.getByText('Campo minado', { exact: true })).toBeVisible();
   await expect(page.locator('table button')).toHaveCount(25);
 });
 
 test('altera uma célula do campo', async ({ page }) => {
-  await page.goto('/def');
+  await page.goto('/definition');
 
   const firstCell = page.locator('table button').first();
   await firstCell.click();
@@ -16,17 +16,17 @@ test('altera uma célula do campo', async ({ page }) => {
 });
 
 test('cria o campo jogável', async ({ page }) => {
-  await page.goto('/def');
+  await page.goto('/definition');
 
   await page.getByRole('button', { name: 'Criar campo jogável' }).click();
 
-  await expect(page).toHaveURL(/\/camp$/);
+  await expect(page).toHaveURL(/\/play$/);
   await expect(page.getByRole('heading', { name: 'Campo minado' })).toBeVisible();
   await expect(page.locator('table button')).toHaveCount(25);
 });
 
 test('revela células sem alterar o campo e permite reiniciar ou voltar', async ({ page }) => {
-  await page.goto('/def');
+  await page.goto('/definition');
   await page.locator('table button').nth(0).click();
   await page.getByRole('button', { name: 'Criar campo jogável' }).click();
 
@@ -44,11 +44,11 @@ test('revela células sem alterar o campo e permite reiniciar ou voltar', async 
   await expect(adjacentCell).toHaveText('1');
 
   await page.getByRole('button', { name: 'Voltar à definição' }).click();
-  await expect(page).toHaveURL(/\/def$/);
+  await expect(page).toHaveURL(/\/definition$/);
 });
 
 test('abre a área vazia e encerra ao encontrar uma bomba', async ({ page }) => {
-  await page.goto('/def');
+  await page.goto('/definition');
   await page.locator('table button').nth(0).click();
   await page.getByRole('button', { name: 'Criar campo jogável' }).click();
 
@@ -66,10 +66,10 @@ test('abre a área vazia e encerra ao encontrar uma bomba', async ({ page }) => 
 });
 
 test('vence ao revelar todas as células que não são bombas e para o cronômetro', async ({ page }) => {
-  await page.goto('/def');
+  await page.goto('/definition');
   await page.getByRole('button', { name: 'Criar campo jogável' }).click();
 
   await page.locator('table button').first().click();
   await expect(page.getByRole('heading', { name: 'Você venceu' })).toBeVisible();
-  await expect(page.getByText('Tempo: 0s')).toBeVisible();
+  await expect(page.getByText('Tempo: 0min 0s')).toBeVisible();
 });
