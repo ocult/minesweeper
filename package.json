@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test --code-coverage",
     "lint": "tslint -c tslint.json -p src/tsconfig.app.json && tslint -c tslint.json -p src/tsconfig.spec.json",
-    "e2e": "playwright test"
+    "e2e": "playwright test --config=e2e/playwright.config.ts"
   },
   "private": true,
   "engines": {
@@ -38,7 +38,7 @@
     "@playwright/test": "^1.62.1",
     "@types/jasmine": "~6.0.0",
     "@types/jasminewd2": "~2.0.13",
-    "@types/node": "^26.4.0",
+    "@types/node": "^26.4.1",
     "ajv": "^8.20.0",
     "istanbul-lib-instrument": "^6.0.3",
     "jasmine-core": "^7.0.2",
