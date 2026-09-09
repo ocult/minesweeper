@@ -3,7 +3,7 @@ import { MinefieldBoardDefinition } from '../shared/minefield.types';
 export class Bootcamp implements MinefieldBoardDefinition {
   private readonly internalCamp: number[][];
 
-  constructor(x: number = 1, y: number = 1) {
+  constructor(x = 1, y = 1) {
     this.internalCamp = [];
     this.buildCamp(0, 0, Math.max(1, x), Math.max(1, y));
   }

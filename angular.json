@@ -82,6 +82,15 @@
             "buildTarget": "Bootcamp:build"
           }
         },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
+        },
         "test": {
           "builder": "@angular/build:karma",
           "options": {

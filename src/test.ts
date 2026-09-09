@@ -2,17 +2,17 @@
 
 import { getTestBed } from '@angular/core/testing';
 import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting
-} from '@angular/platform-browser-dynamic/testing';
+  BrowserTestingModule,
+  platformBrowserTesting
+} from '@angular/platform-browser/testing';
 import 'zone.js/testing';
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting()
+  BrowserTestingModule,
+  platformBrowserTesting()
 );
 
 import './app/app.component.spec';
-import './app/camp-definition/camp-definition.component.spec';
-import './app/camp-definition/bootcamp.spec';
+import './app/definition/definition.component.spec';
+import './app/definition/bootcamp.spec';

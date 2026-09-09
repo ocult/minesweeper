@@ -1,16 +1,20 @@
 <table class="minefield-board">
   <tbody>
-    <tr *ngFor="let row of rows; let x = index">
-      <td *ngFor="let cell of row; let y = index">
-        <button
-          type="button"
-          [ngClass]="['cell-button', getAppearance(x, y)]"
-          (click)="cellClick.emit({ x, y })"
-          (contextmenu)="onContextMenu($event, x, y)"
-        >
-          <span class="cell-value">{{ getCellValue(x, y) || ' ' }}</span>
-        </button>
-      </td>
-    </tr>
+    @for (row of rows; track $index; let x = $index) {
+      <tr>
+        @for (cell of row; track $index; let y = $index) {
+          <td>
+            <button
+              type="button"
+              [ngClass]="['cell-button', getAppearance(x, y)]"
+              (click)="cellClick.emit({ x, y })"
+              (contextmenu)="onContextMenu($event, x, y)"
+            >
+              <span class="cell-value">{{ getCellValue(x, y) || ' ' }}</span>
+            </button>
+          </td>
+        }
+      </tr>
+    }
   </tbody>
 </table>

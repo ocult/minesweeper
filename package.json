@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test --code-coverage",
-    "lint": "tslint -c tslint.json -p src/tsconfig.app.json && tslint -c tslint.json -p src/tsconfig.spec.json",
+    "lint": "ng lint",
     "e2e": "playwright test --config=e2e/playwright.config.ts"
   },
   "private": true,
@@ -17,13 +17,11 @@
     "qs": "6.16.0"
   },
   "dependencies": {
-    "@angular/animations": "^22.1.5",
     "@angular/common": "^22.1.5",
     "@angular/compiler": "^22.1.5",
     "@angular/core": "^22.1.5",
     "@angular/forms": "^22.1.5",
     "@angular/platform-browser": "^22.1.5",
-    "@angular/platform-browser-dynamic": "^22.1.5",
     "@angular/router": "^22.1.5",
     "core-js": "^3.50.0",
     "rxjs": "^7.8.2",
@@ -31,17 +29,27 @@
     "zone.js": "^0.16.2"
   },
   "devDependencies": {
+    "@angular-eslint/builder": "^22.5.0",
+    "@angular-eslint/eslint-plugin": "^22.5.0",
+    "@angular-eslint/eslint-plugin-template": "^22.5.0",
+    "@angular-eslint/schematics": "^22.5.0",
+    "@angular-eslint/template-parser": "^22.5.0",
     "@angular/build": "^22.1.6",
     "@angular/cli": "^22.1.6",
     "@angular/compiler-cli": "^22.1.5",
     "@angular/language-service": "^22.1.5",
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.62.1",
     "@types/jasmine": "~6.0.0",
     "@types/jasminewd2": "~2.0.13",
     "@types/node": "^26.4.1",
+    "@typescript-eslint/eslint-plugin": "^8.70.0",
+    "@typescript-eslint/parser": "^8.70.0",
     "ajv": "^8.20.0",
+    "angular-eslint": "^22.5.0",
+    "eslint": "^10.10.0",
     "istanbul-lib-instrument": "^6.0.3",
-    "jasmine-core": "^7.0.2",
+    "jasmine-core": "^4.6.1",
     "jasmine-spec-reporter": "~7.0.0",
     "karma": "^6.4.4",
     "karma-chrome-launcher": "~3.2.0",
@@ -50,8 +58,8 @@
     "karma-jasmine-html-reporter": "^2.3.0",
     "less": "^4.9.0",
     "ts-node": "~10.9.2",
-    "tslint": "~6.1.0",
-    "typescript": "~6.0.3"
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.70.0"
   },
   "allowScripts": {
     "@parcel/watcher@2.6.0": true,

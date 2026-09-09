@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, NgZone, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, NgZone, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinefieldBoardBase } from '../shared/minefield-board-base';
 import { MinefieldAppearance, MinefieldBoardDefinition, MinefieldMark } from '../shared/minefield.types';
@@ -13,20 +13,21 @@ import { PlayStateService } from './play-state.service';
   imports: [CommonModule, MinefieldComponent]
 })
 export class PlayComponent extends MinefieldBoardBase implements OnDestroy {
+  private readonly playState = inject(PlayStateService);
+  private readonly router = inject(Router);
+  private readonly ngZone = inject(NgZone);
+  private readonly cdr = inject(ChangeDetectorRef);
+
   revealed: boolean[][] = [];
-  marks: Array<Array<MinefieldMark>> = [];
+  marks: MinefieldMark[][] = [];
   gameOver = false;
   gameWon = false;
   elapsedSeconds = 0;
   private timerId: ReturnType<typeof setInterval> | undefined;
 
-  constructor(
-    private playState: PlayStateService,
-    private router: Router,
-    private ngZone: NgZone,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor() {
     super();
+
     if (!this.playState.definition) {
       this.router.navigate(['/definition']);
       return;

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MinefieldBoardBase } from '../shared/minefield-board-base';
@@ -14,18 +14,10 @@ import { PlayStateService } from '../play/play-state.service';
   styleUrls: ['./definition.component.less'],
   imports: [CommonModule, FormsModule, MinefieldComponent]
 })
-export class DefinitionComponent extends MinefieldBoardBase implements OnInit {
+export class DefinitionComponent extends MinefieldBoardBase {
+  private readonly playState = inject(PlayStateService);
+  private readonly router = inject(Router);
   definition = new Bootcamp(5, 5);
-
-  constructor(
-    private playState: PlayStateService,
-    private router: Router
-  ) {
-    super();
-  }
-
-  ngOnInit() {
-  }
 
   htmlDisplay(x: number, y: number): string {
     return this.getBoardValue(this.definition, x, y);
