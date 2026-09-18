@@ -1,6 +1,13 @@
 import { Bootcamp } from './bootcamp';
 
 describe('Bootcamp object', () => {
+  it('deve inicializar o campo com as dimensões corretas e posicionar as bombas', () => {
+    const bootcamp = new Bootcamp(3, 3);
+    bootcamp.setBomb(1, 1);
+    expect(bootcamp.camp.length).toBe(3);
+    expect(bootcamp.camp[1][1]).toBe(-1);
+  });
+
   it('Dado duas dimensões x e y, deve ser criada uma matriz de dimensões x e y com zeros ', () => {
     const x = 2;
     const y = 2;
@@ -199,5 +206,21 @@ describe('Bootcamp object', () => {
     bootcamp.changeBomb(0, 0);
     expect(bootcamp.camp).toEqual([[0, 0], [0, 0]]);
     return bootcamp;
+  });
+
+  it('não deve permitir iniciar o jogo sem bombas ou com quantidade inválida', () => {
+    // Testar validação de limites (ex: 0 bombas ou bombas >= total de células)
+  });
+
+  it('deve revelar células vazias em cascata (flood fill) quando uma célula sem vizinhos minados é clicada', () => {
+    // Simular clique em célula sem bombas vizinhas e verificar se abriu a área adjacente
+  });
+
+  it('deve encerrar a partida e marcar derrota ao clicar em uma célula com bomba', () => {
+    // Simular clique numa célula com bomba e verificar status de "game over"
+  });
+
+  it('deve vencer a partida quando todas as células que não são bombas forem reveladas', () => {
+    // Simular a abertura de todas as células seguras e verificar status de vitória
   });
 });

@@ -1,3 +1,4 @@
+/// <reference types="vitest/globals" />
 import 'zone.js';
 import 'zone.js/testing';
 import 'zone.js/plugins/vitest-patch';
