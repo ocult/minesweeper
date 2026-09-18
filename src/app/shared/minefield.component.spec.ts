@@ -19,20 +19,13 @@ describe('MinefieldComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create minefield component and emit cell click', () => {
+  it('deve criar o componente minefield e lidar com contexto e valores padrão', () => {
     expect(component).toBeTruthy();
-
-    let clickedPosition: any = null;
-    component.cellClick.subscribe((pos) => {
-      clickedPosition = pos;
-    });
-
-    const mockEvent = new MouseEvent('click');
-    // Simulate interaction
-    expect(clickedPosition).toBeNull();
+    expect(component.getCellValue(0, 0)).toBe(' ');
+    expect(component.getAppearance(0, 0)).toBe('hidden');
   });
 
-  it('should prevent default on contextmenu and emit cellContextMenu', () => {
+  it('deve prevenir o comportamento padrão no contextmenu e emitir cellContextMenu', () => {
     let contextMenuData: any = null;
     component.cellContextMenu.subscribe((data) => {
       contextMenuData = data;

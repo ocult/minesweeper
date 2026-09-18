@@ -23,8 +23,16 @@ describe('DefinitionComponent', () => {
     fixture.detectChanges();
   });
 
-  it('deve criar o componente de definição', () => {
-    expect(component).toBeTruthy();
+  it('deve formatar valor de exibição e aparência herdados de MinefieldBoardBase', () => {
+    component.definition = {
+      camp: [[-1, 1]],
+      display: (x: number, y: number) => (x === 0 && y === 1 ? '1' : ' ')
+    } as any;
+
+    expect(component.htmlDisplay(0, 0)).toBe(' ');
+    expect(component.htmlDisplay(0, 1)).toBe('1');
+    expect(component.getCellAppearance(0, 0)).toBe('bomb');
+    expect(component.getCellAppearance(0, 1)).toBe('hidden');
   });
 
   it('deve validar se o número de bombas é menor que o total de células', () => {
