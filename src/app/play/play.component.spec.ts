@@ -82,4 +82,32 @@ describe('PlayComponent', () => {
     expect(component.gameOver).toBe(true);
     expect(component.statusTitle).toBe('Você foi explodido');
   });
+
+  it('deve vencer a partida quando todas as células que não são bombas forem reveladas', () => {
+    // Revelar todas as células que não são bomba (-1)
+    component.reveal(0, 0);
+    component.reveal(0, 1);
+    component.reveal(1, 0);
+    component.reveal(1, 1);
+    component.reveal(1, 2);
+    component.reveal(2, 0);
+    component.reveal(2, 1);
+    component.reveal(2, 2);
+
+    expect(component.gameWon).toBe(true);
+    expect(component.statusTitle).toBe('Você venceu');
+  });
+
+  it('deve ignorar ações (reveal/toggleMark) quando o jogo já estiver encerrado ou vencido', () => {
+    component.gameOver = true;
+    component.reveal(0, 0);
+    component.toggleMark(0, 0);
+    expect(component.marks[0][0]).toBeNull();
+
+    component.gameOver = false;
+    component.gameWon = true;
+    component.reveal(0, 0);
+    component.toggleMark(0, 0);
+    expect(component.marks[0][0]).toBeNull();
+  });
 });

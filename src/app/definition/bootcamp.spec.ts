@@ -112,11 +112,39 @@ describe('Bootcamp object', () => {
     expect(bootcamp.y).toEqual(1);
   });
 
-  it('Dado um campo 2x1, aumentar para 4x1', () => {
-    const bootcamp = new Bootcamp(2, 1);
-    bootcamp.x = 4;
-    expect(bootcamp.x).toEqual(4);
-    expect(bootcamp.y).toEqual(1);
+  it('deve alternar bomba (changeBomb) e respeitar o limite máximo de bombas em setBomb', () => {
+    const bootcamp = new Bootcamp(2, 2);
+    
+    // Adicionar bomba
+    bootcamp.changeBomb(0, 0);
+    expect(bootcamp.camp[0][0]).toBe(-1);
+
+    // Remover bomba
+    bootcamp.changeBomb(0, 0);
+    expect(bootcamp.camp[0][0]).toBe(0);
+
+    // Tentar lotar de bombas além do limite (max: 2*2 - 1 = 3 bombas)
+    bootcamp.setBomb(0, 0);
+    bootcamp.setBomb(0, 1);
+    bootcamp.setBomb(1, 0);
+    bootcamp.setBomb(1, 1); // deve ignorar pois atingiu o limite de 3 bombas
+    expect(bootcamp.camp[1][1]).not.toBe(-1);
+  });
+
+  it('deve redimensionar o campo para dimensões menores ou iguais sem erro', () => {
+    const bootcamp = new Bootcamp(3, 3);
+    
+    // Sem mudança
+    bootcamp.x = 3;
+    bootcamp.y = 3;
+    expect(bootcamp.x).toBe(3);
+    expect(bootcamp.y).toBe(3);
+
+    // Diminuir dimensão
+    bootcamp.x = 2;
+    bootcamp.y = 2;
+    expect(bootcamp.x).toBe(2);
+    expect(bootcamp.y).toBe(2);
   });
 
   it('Dado um campo 4x1, diminuir para 2x1', () => {

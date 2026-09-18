@@ -66,4 +66,22 @@ describe('DefinitionComponent', () => {
     component.createCamp();
     expect(playState.definition).toBe(component.definition);
   });
+
+  it('não deve navegar ou definir o estado do jogo ao tentar criar campo sem bombas ou sem espaço vazio', () => {
+    const playState = TestBed.inject(PlayStateService);
+    
+    // Sem bombas
+    component.definition = {
+      camp: [[0, 0], [0, 0]]
+    } as any;
+    component.createCamp();
+    expect(playState.definition).toBeNull();
+
+    // Sem espaço vazio (todas bombas)
+    component.definition = {
+      camp: [[-1, -1], [-1, -1]]
+    } as any;
+    component.createCamp();
+    expect(playState.definition).toBeNull();
+  });
 });
