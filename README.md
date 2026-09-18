@@ -15,7 +15,23 @@ Run `npm run build` to create a production build. The build artifacts are stored
 
 ## Running unit tests
 
-Run `npx ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm test` to execute the unit tests via [Vitest](https://vitest.dev).
+
+### Code coverage report
+
+To run unit tests and generate the HTML coverage report:
+
+```bash
+npm test
+```
+
+The report will be generated in the `coverage/` folder. You can open `coverage/index.html` in your browser to inspect line, branch, and function coverage visually.
+
+For an interactive UI report in your browser:
+
+```bash
+npx vitest --ui
+```
 
 ## Running end-to-end tests
 

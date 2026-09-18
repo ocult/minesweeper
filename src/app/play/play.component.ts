@@ -94,7 +94,7 @@ export class PlayComponent extends MinefieldBoardBase implements OnDestroy {
       return ' ';
     }
 
-    return this.getBoardValue(this.definition, x, y);
+    return this.getBoardValue(this.definition!, x, y);
   }
 
   getCellAppearance(x: number, y: number): MinefieldAppearance {
@@ -102,7 +102,7 @@ export class PlayComponent extends MinefieldBoardBase implements OnDestroy {
       return this.getHiddenAppearance(this.marks[x][y]);
     }
 
-    return this.getRevealedAppearance(this.definition, x, y);
+    return this.getRevealedAppearance(this.definition!, x, y);
   }
 
   onCellContextMenu(event: MouseEvent, x: number, y: number): void {
@@ -136,10 +136,7 @@ export class PlayComponent extends MinefieldBoardBase implements OnDestroy {
       return;
     }
 
-    const definition = this.definition;
-    if (!definition) {
-      return;
-    }
+    const definition = this.definition!;
 
     if (definition.camp[x][y] === -1) {
       this.gameOver = true;
@@ -181,10 +178,7 @@ export class PlayComponent extends MinefieldBoardBase implements OnDestroy {
   }
 
   private checkVictory(): void {
-    const definition = this.definition;
-    if (!definition) {
-      return;
-    }
+    const definition = this.definition!;
 
     const allBombsFlagged = definition.camp.every((row, rowIndex) =>
       row.every((cell, columnIndex) => {
@@ -227,10 +221,7 @@ export class PlayComponent extends MinefieldBoardBase implements OnDestroy {
       return;
     }
 
-    const definition = this.definition;
-    if (!definition) {
-      return;
-    }
+    const definition = this.definition!;
 
     this.gameWon = true;
     this.stopTimer();
@@ -238,10 +229,7 @@ export class PlayComponent extends MinefieldBoardBase implements OnDestroy {
   }
 
   private revealEmptyArea(x: number, y: number): void {
-    const definition = this.definition;
-    if (!definition) {
-      return;
-    }
+    const definition = this.definition!;
 
     const pending = [[x, y]];
     while (pending.length > 0) {

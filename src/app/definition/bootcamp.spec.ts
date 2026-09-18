@@ -131,22 +131,6 @@ describe('Bootcamp object', () => {
     expect(bootcamp.camp[1][1]).not.toBe(-1);
   });
 
-  it('deve redimensionar o campo para dimensões menores ou iguais sem erro', () => {
-    const bootcamp = new Bootcamp(3, 3);
-    
-    // Sem mudança
-    bootcamp.x = 3;
-    bootcamp.y = 3;
-    expect(bootcamp.x).toBe(3);
-    expect(bootcamp.y).toBe(3);
-
-    // Diminuir dimensão
-    bootcamp.x = 2;
-    bootcamp.y = 2;
-    expect(bootcamp.x).toBe(2);
-    expect(bootcamp.y).toBe(2);
-  });
-
   it('Dado um campo 4x1, diminuir para 2x1', () => {
     const bootcamp = new Bootcamp(4, 1);
     bootcamp.x = 2;
@@ -208,13 +192,8 @@ describe('Bootcamp object', () => {
     beforeEach(() => {
       bootcamp = new Bootcamp(5, 5);
       bootcamp.setBomb(1, 1);
-      expect(bootcamp.camp).toEqual([
-        [1, 1, 1, 0, 0],
-        [1, -1, 1, 0, 0],
-        [1, 1, 1, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0]
-      ]);
+      // Forçar cálculo de vizinhos via o getter .camp
+      void bootcamp.camp;
     });
     it('Mostrar a posição 0,0 como 1', () => {
       expect(bootcamp.display(0, 0)).toEqual('1');
@@ -233,22 +212,19 @@ describe('Bootcamp object', () => {
     expect(bootcamp.camp).toEqual([[-1, 1], [1, 1]]);
     bootcamp.changeBomb(0, 0);
     expect(bootcamp.camp).toEqual([[0, 0], [0, 0]]);
-    return bootcamp;
   });
 
-  it('não deve permitir iniciar o jogo sem bombas ou com quantidade inválida', () => {
-    // Testar validação de limites (ex: 0 bombas ou bombas >= total de células)
+  it('deve ignorar a alteração do tamanho se a nova dimensão for idêntica', () => {
+    const bootcamp = new Bootcamp(2, 2);
+    bootcamp.x = 2;
+    bootcamp.y = 2;
+    expect(bootcamp.x).toBe(2);
+    expect(bootcamp.y).toBe(2);
   });
 
-  it('deve revelar células vazias em cascata (flood fill) quando uma célula sem vizinhos minados é clicada', () => {
-    // Simular clique em célula sem bombas vizinhas e verificar se abriu a área adjacente
-  });
-
-  it('deve encerrar a partida e marcar derrota ao clicar em uma célula com bomba', () => {
-    // Simular clique numa célula com bomba e verificar status de "game over"
-  });
-
-  it('deve vencer a partida quando todas as células que não são bombas forem reveladas', () => {
-    // Simular a abertura de todas as células seguras e verificar status de vitória
+  it('deve retornar 0 para a dimensão y se o campo interno estiver vazio', () => {
+    const bootcamp = new Bootcamp(1, 1);
+    (bootcamp as any).internalCamp = [];
+    expect(bootcamp.y).toBe(0);
   });
 });

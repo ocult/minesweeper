@@ -74,6 +74,8 @@ describe('DefinitionComponent', () => {
     component.definition = {
       camp: [[0, 0], [0, 0]]
     } as any;
+    expect(component.hasBomb).toBe(false);
+    expect(component.hasEmptySpace).toBe(true);
     component.createCamp();
     expect(playState.definition).toBeNull();
 
@@ -81,6 +83,8 @@ describe('DefinitionComponent', () => {
     component.definition = {
       camp: [[-1, -1], [-1, -1]]
     } as any;
+    expect(component.hasBomb).toBe(true);
+    expect(component.hasEmptySpace).toBe(false);
     component.createCamp();
     expect(playState.definition).toBeNull();
   });
