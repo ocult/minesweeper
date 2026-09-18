@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test --code-coverage",
+    "test": "vitest run",
     "lint": "ng lint",
     "e2e": "playwright test --config=e2e/playwright.config.ts"
   },
@@ -22,13 +22,16 @@
     "@angular/core": "^22.1.6",
     "@angular/forms": "^22.1.6",
     "@angular/platform-browser": "^22.1.6",
+    "@angular/platform-browser-dynamic": "^22.1.7",
     "@angular/router": "^22.1.6",
     "core-js": "^3.50.0",
     "rxjs": "^7.8.2",
     "tslib": "^2.0.0",
-    "zone.js": "^0.16.2"
+    "zone.js": "^0.16.3"
   },
   "devDependencies": {
+    "@analogjs/platform": "^2.7.2",
+    "@analogjs/vite-plugin-angular": "^2.7.2",
     "@angular-eslint/builder": "^22.5.0",
     "@angular-eslint/eslint-plugin": "^22.5.0",
     "@angular-eslint/eslint-plugin-template": "^22.5.0",
@@ -45,21 +48,19 @@
     "@types/node": "^26.5.1",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@typescript-eslint/parser": "^8.70.0",
+    "@vitest/ui": "^5.0.1",
     "ajv": "^8.20.0",
     "angular-eslint": "^22.5.0",
     "eslint": "^10.10.0",
     "istanbul-lib-instrument": "^6.0.3",
     "jasmine-core": "^7.0.2",
     "jasmine-spec-reporter": "~7.0.0",
-    "karma": "^6.4.4",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "^2.2.1",
-    "karma-jasmine": "^5.1.0",
-    "karma-jasmine-html-reporter": "^2.3.0",
+    "jsdom": "^30.1.0",
     "less": "^4.9.0",
     "ts-node": "~10.9.2",
     "typescript": "~6.0.3",
-    "typescript-eslint": "^8.70.0"
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^5.0.1"
   },
   "allowScripts": {
     "@parcel/watcher@2.6.0": true,
