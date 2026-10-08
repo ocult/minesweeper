@@ -29,7 +29,6 @@
     "zone.js": "^0.16.3"
   },
   "devDependencies": {
-    "@analogjs/platform": "^2.8.0",
     "@analogjs/vite-plugin-angular": "^2.7.2",
     "@angular-eslint/builder": "^22.5.0",
     "@angular-eslint/eslint-plugin": "^22.5.0",
@@ -66,6 +65,7 @@
     "core-js@3.50.0": true,
     "esbuild@0.28.2": true,
     "lmdb@3.5.6": true,
-    "msgpackr-extract@3.0.4": true
+    "msgpackr-extract@3.0.4": true,
+    "esbuild@0.27.7": true
   }
 }
