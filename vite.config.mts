@@ -1,11 +1,11 @@
 import { defineConfig } from 'vitest/config';
 import angular from '@analogjs/vite-plugin-angular';
-import { resolve } from 'path';
+import { fileURLToPath } from 'node:url';
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
   plugins: [
     angular({
-      tsconfig: resolve(__dirname, './src/tsconfig.spec.json'),
+      tsconfig: fileURLToPath(new URL('./src/tsconfig.spec.json', import.meta.url)),
     }),
   ],
   test: {
@@ -19,4 +19,4 @@ export default defineConfig(({ mode }) => ({
       clean: true,
     },
   },
-}));
+});
