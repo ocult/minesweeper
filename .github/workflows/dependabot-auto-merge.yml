@@ -1,0 +1,74 @@
+name: Dependabot auto-merge
+
+on:
+  workflow_run:
+    workflows:
+      - Dependabot checks
+    types:
+      - completed
+
+permissions:
+  actions: read
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: dependabot-auto-merge-${{ github.event.workflow_run.head_sha }}
+  cancel-in-progress: false
+
+jobs:
+  approve-and-merge:
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Approve and merge the tested pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+
+          pull_requests="$(
+            gh api \
+              --paginate \
+              -H "Accept: application/vnd.github+json" \
+              "repos/${GITHUB_REPOSITORY}/commits/${HEAD_SHA}/pulls"
+          )"
+
+          matching_prs="$(
+            jq \
+              --arg head_sha "$HEAD_SHA" \
+              --arg repository "$GITHUB_REPOSITORY" \
+              -s 'add | map(
+                select(
+                  .state == "open" and
+                  .base.ref == "main" and
+                  .user.login == "dependabot[bot]" and
+                  (.head.ref | startswith("dependabot/")) and
+                  .head.sha == $head_sha and
+                  .head.repo.full_name == $repository
+                )
+              )' <<<"$pull_requests"
+          )"
+
+          match_count="$(jq 'length' <<<"$matching_prs")"
+          if [[ "$match_count" -ne 1 ]]; then
+            echo "Expected one open Dependabot pull request for ${HEAD_SHA}, found ${match_count}."
+            exit 1
+          fi
+
+          pr_number="$(jq -r '.[0].number' <<<"$matching_prs")"
+
+          gh pr review "$pr_number" \
+            --repo "$GITHUB_REPOSITORY" \
+            --approve \
+            --body "Aprovado automaticamente após npm i, npm test e npm audit."
+
+          gh pr merge "$pr_number" \
+            --repo "$GITHUB_REPOSITORY" \
+            --merge \
+            --auto \
+            --delete-branch
